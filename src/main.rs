@@ -1,3 +1,4 @@
+use log::error;
 use single_instance::SingleInstance;
 #[cfg(target_os = "windows")]
 use winapi::um::wincon::GetConsoleWindow;
@@ -5,6 +6,8 @@ use winapi::um::wincon::GetConsoleWindow;
 use winapi::um::winuser::ShowWindow;
 #[cfg(target_os = "windows")]
 use winapi::um::winuser::SW_HIDE;
+#[cfg(target_os = "windows")]
+use winapi::um::winuser::SW_SHOW;
 
 use utils::logger::init_logger;
 use utils::query_cache;
@@ -14,7 +17,7 @@ mod resources;
 mod utils;
 mod views;
 
-pub fn main() -> iced::Result {
+pub fn main() {
     // If in release mode, hide the console window
     // On windows, we cannot use #![windows_subsystem = "windows"]
     // since it will create no console from which to read youtube-dl output
@@ -38,7 +41,12 @@ pub fn main() -> iced::Result {
     query_cache::init_global().expect("Error error");
 
     // Show the GUI
-    gui::Gui::start()
+    if let Err(err) = gui::Gui::start() {
+        error!("{err}")
+    }
+
+    // If in release mode, when the GUI is closed, show the console window
+    show_console_window()
 }
 
 #[cfg(target_os = "windows")]
@@ -50,7 +58,7 @@ pub fn hide_console_window() {
         }
 
         let result = unsafe { ShowWindow(console_window_handle, SW_HIDE) };
-        if result == 0 {
+        if result == 1 {
             panic!("Unable to hide console window");
         }
     }
@@ -58,3 +66,21 @@ pub fn hide_console_window() {
 
 #[cfg(not(target_os = "windows"))]
 pub fn hide_console_window() {}
+
+#[cfg(target_os = "windows")]
+pub fn show_console_window() {
+    if !cfg!(debug_assertions) {
+        let console_window_handle = unsafe { GetConsoleWindow() };
+        if console_window_handle.is_null() {
+            panic!("Unable to get console window handle");
+        }
+
+        let result = unsafe { ShowWindow(console_window_handle, SW_SHOW) };
+        if result == 1 {
+            panic!("Unable to show console window");
+        }
+    }
+}
+
+#[cfg(not(target_os = "windows"))]
+pub fn show_console_window() {}
