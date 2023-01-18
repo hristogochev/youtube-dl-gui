@@ -131,7 +131,7 @@ impl Application for Gui {
     }
 
     fn title(&self) -> String {
-        String::from("youtube-dl-gui")
+        String::from("YouTube Converter")
     }
 
     fn update(&mut self, message: Self::Message) -> Command<Self::Message> {
