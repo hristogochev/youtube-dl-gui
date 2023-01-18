@@ -17,7 +17,7 @@ mod resources;
 mod utils;
 mod views;
 
-pub fn main() {
+fn main() {
     // If in release mode, hide the console window
     // On windows, we cannot use #![windows_subsystem = "windows"]
     // since it will create no console from which to read youtube-dl output
@@ -50,7 +50,7 @@ pub fn main() {
 }
 
 #[cfg(target_os = "windows")]
-pub fn hide_console_window() {
+fn hide_console_window() {
     if !cfg!(debug_assertions) {
         let console_window_handle = unsafe { GetConsoleWindow() };
         if console_window_handle.is_null() {
@@ -68,7 +68,7 @@ pub fn hide_console_window() {
 pub fn hide_console_window() {}
 
 #[cfg(target_os = "windows")]
-pub fn show_console_window() {
+fn show_console_window() {
     if !cfg!(debug_assertions) {
         let console_window_handle = unsafe { GetConsoleWindow() };
         if console_window_handle.is_null() {
@@ -83,4 +83,4 @@ pub fn show_console_window() {
 }
 
 #[cfg(not(target_os = "windows"))]
-pub fn show_console_window() {}
+fn show_console_window() {}
