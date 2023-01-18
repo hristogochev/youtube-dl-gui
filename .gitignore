@@ -1,0 +1,6 @@
+/target
+/.idea
+/youtube-dl.exe
+/Cargo.lock
+/ffmpeg.exe
+/logs.txt
