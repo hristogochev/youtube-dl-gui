@@ -65,7 +65,7 @@ fn hide_console_window() {
 }
 
 #[cfg(not(target_os = "windows"))]
-pub fn hide_console_window() {}
+fn hide_console_window() {}
 
 #[cfg(target_os = "windows")]
 fn show_console_window() {
