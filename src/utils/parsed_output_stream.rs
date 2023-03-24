@@ -29,10 +29,7 @@ pub fn parsed_output_stream() -> impl Stream<Item = Message> + Send {
                         }
                     },
                     Err(err) => {
-                        return Some((
-                            Message::Failed(err.to_string()),
-                            InternalParsedOutputState::Failed,
-                        ));
+                        return Some((Message::Failed(err), InternalParsedOutputState::Failed));
                     }
                 };
 
@@ -223,7 +220,7 @@ pub fn parsed_output_stream() -> impl Stream<Item = Message> + Send {
                     ParsedOutputState::Error(err) => {
                         error!("Exit code: {:?}, Error: {}", err.exit_code, err.error);
                         Some((
-                            Message::Failed(err.error.to_string()),
+                            Message::Failed(err.error),
                             InternalParsedOutputState::Failed,
                         ))
                     }

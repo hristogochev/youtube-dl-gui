@@ -1,9 +1,10 @@
+use iced::widget::{column, progress_bar, text};
+use iced::{Alignment, Element, Length, Renderer};
+
 use crate::gui::{Gui, Message};
 use crate::resources::fonts::open_sans::{OPEN_SANS_BOLD, OPEN_SANS_SEMIBOLD};
 use crate::resources::styles::text_styles::TextStyles;
 use crate::resources::styles::theme::AppTheme;
-use iced::widget::{column, progress_bar, text};
-use iced::{Alignment, Element, Length, Renderer};
 
 impl Gui {
     /// Download currently in progress view
@@ -27,8 +28,8 @@ impl Gui {
                 column(vec![])
                     .push(
                         progress_bar(0.0..=100.0, progress)
-                            .width(Length::Units(200))
-                            .height(Length::Units(12)),
+                            .width(Length::Fixed(200.0))
+                            .height(Length::Fixed(12.0)),
                     )
                     .spacing(10)
                     .push(

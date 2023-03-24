@@ -74,7 +74,7 @@ impl Gui {
             window: window_settings,
             flags: Default::default(),
             default_font: Some(RAW_OPEN_SANS_REGULAR),
-            default_text_size: 20,
+            default_text_size: 20.0,
             text_multithreading: false,
             antialiasing: false,
             exit_on_close_request: true,

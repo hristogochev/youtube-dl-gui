@@ -38,7 +38,7 @@ fn main() {
 
     // Init the download subscription inputs cache
     // We only want to clone the inputs of each subscription once, not everytime the state of the GUI updates.
-    query_cache::init_global().expect("Error error");
+    query_cache::init_global();
 
     // Show the GUI
     if let Err(err) = gui::Gui::start() {

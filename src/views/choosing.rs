@@ -66,7 +66,7 @@ impl Gui {
                                         .placeholder("Choose a format...")
                                         .padding(Padding::from([8, 10]))
                                         .text_size(21)
-                                        .handle(pick_list::Handle::Arrow { size: Some(28) }),
+                                        .handle(pick_list::Handle::Arrow { size: Some(28.0) }),
                                     ),
                             ),
                     )

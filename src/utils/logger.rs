@@ -1,7 +1,4 @@
 #[cfg(debug_assertions)]
-use anyhow::anyhow;
-use anyhow::Result;
-#[cfg(debug_assertions)]
 use log::LevelFilter;
 #[cfg(debug_assertions)]
 use simplelog::{
@@ -11,7 +8,7 @@ use simplelog::{
 use std::fs::OpenOptions;
 
 #[cfg(debug_assertions)]
-pub fn init_logger() -> Result<()> {
+pub fn init_logger() -> Result<(), String> {
     let logger_config = ConfigBuilder::new()
         .add_filter_allow_str("youtube-dl-gui")
         .add_filter_allow_str("youtube_dl_gui")
@@ -26,7 +23,7 @@ pub fn init_logger() -> Result<()> {
         .write(true)
         .truncate(true)
         .open("logs.txt")
-        .map_err(|err| anyhow!("Could not open or create logs file: {err}"))?;
+        .map_err(|err| format!("Could not open or create logs file: {err}"))?;
 
     CombinedLogger::init(vec![
         TermLogger::new(
@@ -37,7 +34,7 @@ pub fn init_logger() -> Result<()> {
         ),
         WriteLogger::new(LevelFilter::max(), logger_config, logs_file),
     ])
-    .map_err(|err| anyhow!("Cannot initialize logger: {err}"))
+    .map_err(|err| format!("Cannot initialize logger: {err}"))
 }
 
 #[cfg(not(debug_assertions))]
