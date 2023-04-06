@@ -38,6 +38,6 @@ pub fn init_logger() -> Result<(), String> {
 }
 
 #[cfg(not(debug_assertions))]
-pub fn init_logger() -> Result<()> {
+pub fn init_logger() -> Result<(), String> {
     Ok(())
 }
