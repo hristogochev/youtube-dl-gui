@@ -1,6 +1,6 @@
 [package]
 name = "youtube-dl-gui"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 authors = ["hristogochev"]
 description = "Cross-platform GUI for youtube-dl made with Iced"
